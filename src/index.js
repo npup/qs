@@ -60,7 +60,11 @@ function toQueryString(o) {
       pairs.push(key+"="+encodeURIComponent(value));
     }
   }
-  return pairs.sort(function (s0, s1) {return s1<s0;}).join("&");
+  var expr = /^([^=]+)/;
+  return pairs.sort(function (s0, s1) {
+    var k0 = expr.exec(s0), k1 = expr.exec(s1);
+    return k1<k0 ? 1 : k1>k0 ? -1 : 0;
+  }).join("&");
 }
 
 module.exports = {
